@@ -32,31 +32,13 @@
       font-family: var(--font-body);
       font-size: 14px;
       line-height: 1.7;
-      cursor: none;
+      cursor: auto;
       overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
 
-    /* CURSOR */
-    #cursor {
-      width: 12px; height: 12px;
-      background: var(--accent); border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9999;
-      transition: transform .15s ease, width .2s, height .2s, background .2s;
-      mix-blend-mode: difference;
-    }
-    #cursor-ring {
-      width: 36px; height: 36px;
-      border: 1.5px solid var(--accent); border-radius: 50%;
-      position: fixed; top: 0; left: 0;
-      pointer-events: none; z-index: 9998;
-      transition: transform .35s cubic-bezier(.17,.67,.24,.99), opacity .3s;
-      opacity: .5;
-    }
-    body:hover #cursor { transform: translate(-50%,-50%); }
-    body:hover #cursor-ring { transform: translate(-50%,-50%); }
+    /* custom cursor removed */
 
     /* NOISE */
     body::before {
@@ -264,7 +246,7 @@
       font-family: var(--font-head); font-weight: 700;
       font-size: .8rem; letter-spacing: .05em;
       border-radius: 100px; border: none;
-      transition: transform .2s, box-shadow .2s; cursor: none;
+      transition: transform .2s, box-shadow .2s; cursor: pointer;
     }
     .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(232,255,71,.35); }
     .btn-secondary {
@@ -273,7 +255,7 @@
       font-family: var(--font-head); font-weight: 600;
       font-size: .8rem; letter-spacing: .05em;
       border-radius: 100px; border: 1px solid var(--border);
-      transition: border-color .2s, background .2s; cursor: none;
+      transition: border-color .2s, background .2s; cursor: pointer;
     }
     .btn-secondary:hover { border-color: var(--accent); background: rgba(232,255,71,.05); }
 
@@ -352,10 +334,21 @@
     .tab-btn {
       padding: .4rem 1.1rem; border: 1px solid var(--border); border-radius: 100px;
       background: transparent; color: var(--muted); font-family: var(--font-body);
-      font-size: .72rem; letter-spacing: .06em; cursor: none; transition: .2s;
+      font-size: .72rem; letter-spacing: .06em; transition: .2s;
     }
+    .tab-btn { cursor: pointer; }
     .tab-btn.active, .tab-btn:hover { background: var(--accent); color: #000; border-color: var(--accent); }
     .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+    
+    /* NOTES */
+    #notes .notes-controls { display: flex; gap: 1rem; align-items: center; margin-top: 1.5rem; margin-bottom: 1.2rem; }
+    #notes .notes-tabs { display: flex; gap: .5rem; }
+    #notes .notes-tab { padding: .4rem .9rem; border: 1px solid var(--border); border-radius: 100px; background: transparent; color: var(--muted); cursor: pointer; }
+    #notes .notes-tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
+    .notes-panels { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem; }
+    .notes-panel { display: none; }
+    .notes-folder { display: flex; align-items: center; gap: .8rem; padding: .9rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; margin-bottom: .8rem; }
+    .notes-folder .name { font-family: var(--font-head); font-weight: 700; color: var(--accent2); }
     .skill-chip {
       padding: 1rem 1.2rem; background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--r); display: flex; flex-direction: column; gap: .5rem;
@@ -483,42 +476,11 @@
     .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); }
     .form-group textarea { height: 120px; }
     .form-group select option { background: var(--surface); }
-    .form-submit { padding: .85rem 2rem; background: var(--accent); color: #000; font-family: var(--font-head); font-weight: 800; font-size: .85rem; letter-spacing: .05em; border: none; border-radius: 100px; cursor: none; transition: transform .2s, box-shadow .2s; align-self: flex-start; }
+    .form-submit { padding: .85rem 2rem; background: var(--accent); color: #000; font-family: var(--font-head); font-weight: 800; font-size: .85rem; letter-spacing: .05em; border: none; border-radius: 100px; cursor: pointer; transition: transform .2s, box-shadow .2s; align-self: flex-start; }
     .form-submit:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(232,255,71,.35); }
     .form-note { font-size: .72rem; color: var(--muted); }
 
-    /* GALLERY */
-    #gallery { background: var(--bg2); max-width: 100%; padding: 7rem 0; }
-    #gallery .section-label, #gallery .section-title { max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 3rem; }
-    .gallery-upload { max-width: 1200px; margin: 0 auto; padding: 0 3rem; }
-    .upload-box {
-      border: 2px dashed var(--border); border-radius: 16px; padding: 3rem;
-      text-align: center; transition: border-color .2s, background .2s;
-      cursor: pointer; margin-top: 3rem;
-    }
-    .upload-box:hover { border-color: var(--accent); background: rgba(232,255,71,.03); }
-    .upload-box input { display: none; }
-    .upload-label { display: flex; flex-direction: column; align-items: center; gap: .8rem; cursor: pointer; }
-    .upload-icon { font-size: 3rem; }
-    .upload-text { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--text); }
-    .upload-hint { font-size: .8rem; color: var(--muted); }
-    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; padding: 3rem 3rem 0; }
-    .gallery-item {
-      position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden;
-      background: var(--surface); border: 1px solid var(--border); transition: transform .3s, box-shadow .3s;
-    }
-    .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(232,255,71,.15); }
-    .gallery-item img { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
-    .gallery-item .remove-btn {
-      position: absolute; top: .5rem; right: .5rem; background: rgba(255,107,107,.9);
-      color: #fff; border: none; border-radius: 50%; width: 32px; height: 32px;
-      font-size: 1.2rem; cursor: pointer; opacity: 0; transition: opacity .2s;
-    }
-    .gallery-item:hover .remove-btn { opacity: 1; }
-    .upload-status { max-width: 1200px; margin: 2rem auto; padding: 1rem; border-radius: 12px;
-      background: rgba(232,255,71,.1); border: 1px solid rgba(232,255,71,.3);
-      color: var(--accent); text-align: center; font-size: .9rem;
-    }
+    /* GALLERY removed */
 
     /* FOOTER */
     footer { padding: 3rem; text-align: center; border-top: 1px solid var(--border); }
@@ -558,8 +520,7 @@
 </head>
 <body>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
+<!-- custom cursor removed -->
 
 <!-- TOP NAV -->
 <nav>
@@ -569,10 +530,11 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
-    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#notes">Notes</a></li>
     <li><a href="#blog">Blog</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <a href="#notes" class="btn-secondary nav-notes" style="margin-right:.6rem;">Notes</a>
   <a href="#contact" class="nav-cta">Hire me</a>
   <div class="hamburger" onclick="toggleMobileMenu()">
     <span></span><span></span><span></span>
@@ -664,6 +626,7 @@
       <div class="hero-actions">
         <a href="#projects" class="btn-primary">View my work →</a>
         <a href="#contact" class="btn-secondary">Let's talk</a>
+        <button id="note-toggle" class="btn-secondary">Notes</button>
       </div>
     </div>
 
@@ -763,6 +726,59 @@
 </div>
 
 <!-- EXPERIENCE / EDUCATION -->
+  <!-- NOTES -->
+  <section id="notes">
+    <div class="section-label">Notes</div>
+    <h2 class="section-title">My <em>Notes</em></h2>
+    <div class="notes-controls reveal">
+      <div class="notes-tabs">
+        <button class="notes-tab active" data-tab="micro">Microprocessor</button>
+        <button class="notes-tab" data-tab="web">Web Technology</button>
+        <button class="notes-tab" data-tab="alg">Algebra & Geometry</button>
+      </div>
+    </div>
+    <div class="notes-panels reveal">
+      <div class="notes-panel" id="micro" style="display:block;">
+        <div class="notes-folder">
+          <span>📁</span>
+          <div class="name">microprocessor</div>
+        </div>
+        <div class="pdf-list" id="micro-list">
+          <!-- PDF links for microprocessor will be populated here -->
+        </div>
+        <div class="pdf-control" style="margin-top:1rem; display:flex; gap:0.8rem; align-items:center;">
+          <a id="micro-current" style="display:none"></a>
+          <button id="micro-next" class="btn-secondary">Next PDF</button>
+        </div>
+      </div>
+      <div class="notes-panel" id="web">
+        <div class="notes-folder">
+          <span>📁</span>
+          <div class="name">web technology</div>
+        </div>
+        <div class="pdf-list" id="web-list">
+          <!-- PDF links for web technology will be populated here -->
+        </div>
+        <div class="pdf-control" style="margin-top:1rem; display:flex; gap:0.8rem; align-items:center;">
+          <a id="web-current" style="display:none"></a>
+          <button id="web-next" class="btn-secondary">Next PDF</button>
+        </div>
+      </div>
+      <div class="notes-panel" id="alg">
+        <div class="notes-folder">
+          <span>📁</span>
+          <div class="name">algebra and geometry</div>
+        </div>
+        <div class="pdf-list" id="alg-list">
+          <!-- PDF links for algebra and geometry will be populated here -->
+        </div>
+        <div class="pdf-control" style="margin-top:1rem; display:flex; gap:0.8rem; align-items:center;">
+          <a id="alg-current" style="display:none"></a>
+          <button id="alg-next" class="btn-secondary">Next PDF</button>
+        </div>
+      </div>
+    </div>
+  </section>
 <section id="experience">
   <div class="section-label">Journey</div>
   <h2 class="section-title">Where I've <em>studied</em></h2>
@@ -884,28 +900,7 @@
   </div>
 </div>
 
-<!-- GALLERY -->
-<section id="gallery">
-  <div class="section-label">Gallery</div>
-  <h2 class="section-title">My <em>moments</em></h2>
-  
-  <div class="gallery-upload reveal">
-    <div class="upload-box">
-      <input type="file" id="galleryUpload" accept="image/*" multiple onchange="handleGalleryUpload(event)" />
-      <label for="galleryUpload" class="upload-label">
-        <span class="upload-icon">📸</span>
-        <span class="upload-text">Click to upload or drag images here</span>
-        <span class="upload-hint">PNG, JPG, GIF up to 10MB each</span>
-      </label>
-    </div>
-  </div>
-
-  <div class="gallery-grid" id="galleryGrid">
-    <!-- Uploaded images will appear here -->
-  </div>
-  
-  <div id="uploadStatus" class="upload-status" style="display:none;"></div>
-</section>
+<!-- Gallery removed; Notes accessible via nav -->
 
 <!-- TESTIMONIALS -->
 <section id="testimonials">
@@ -1108,7 +1103,7 @@
       <a href="#skills">Skills</a>
       <a href="#experience">Education</a>
       <a href="#projects">Projects</a>
-      <a href="#gallery">Gallery</a>
+      <a href="#notes">Notes</a>
       <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
       <a href="#">Resume ↓</a>
@@ -1121,21 +1116,7 @@
 </footer>
 
 <script>
-  /* CURSOR */
-  const cursor = document.getElementById('cursor');
-  const ring   = document.getElementById('cursor-ring');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  (function animateCursor() {
-    rx += (mx - rx) * .18; ry += (my - ry) * .18;
-    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
-    ring.style.left   = rx + 'px'; ring.style.top  = ry + 'px';
-    requestAnimationFrame(animateCursor);
-  })();
-  document.querySelectorAll('a, button, .skill-chip, .project-card, .blog-card, .profile-link').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.style.transform = 'translate(-50%,-50%) scale(2.5)'; });
-    el.addEventListener('mouseleave', () => { cursor.style.transform = 'translate(-50%,-50%) scale(1)'; });
-  });
+  /* custom cursor removed */
 
   /* SCROLL REVEAL */
   const revealObs = new IntersectionObserver(entries => {
@@ -1211,90 +1192,94 @@
     document.querySelector('nav').style.padding = window.scrollY > 60 ? '.9rem 3rem' : '';
   });
 
-  /* GALLERY UPLOAD */
-  let galleryImages = [];
-  
-  function handleGalleryUpload(event) {
-    const files = event.target.files;
-    const statusDiv = document.getElementById('uploadStatus');
-    
-    if (files.length === 0) return;
-    
-    let uploadedCount = 0;
-    
-    for (let file of files) {
-      if (file.type.startsWith('image/') && file.size <= 10 * 1024 * 1024) {
-        const reader = new FileReader();
-        
-        reader.onload = function(e) {
-          galleryImages.push({
-            src: e.target.result,
-            name: file.name,
-            uploadTime: new Date().toLocaleString()
-          });
-          
-          renderGallery();
-          uploadedCount++;
-          
-          if (uploadedCount === files.length) {
-            statusDiv.style.display = 'block';
-            statusDiv.textContent = `✓ ${uploadedCount} image(s) uploaded successfully!`;
-            setTimeout(() => { statusDiv.style.display = 'none'; }, 3000);
-          }
-        };
-        
-        reader.readAsDataURL(file);
-      }
+  /* Gallery removed */
+</script>
+<script>
+  (function(){
+    const tabs = Array.from(document.querySelectorAll('.notes-tab'));
+    const panels = Array.from(document.querySelectorAll('.notes-panel'));
+    function activateTab(el){
+      tabs.forEach(t=>t.classList.remove('active'));
+      el.classList.add('active');
+      const name = el.dataset.tab;
+      panels.forEach(p=> p.style.display = p.id===name ? 'block' : 'none');
     }
-    
-    // Reset input
-    event.target.value = '';
-  }
-  
-  function renderGallery() {
-    const grid = document.getElementById('galleryGrid');
-    grid.innerHTML = '';
-    
-    galleryImages.forEach((img, index) => {
-      const item = document.createElement('div');
-      item.className = 'gallery-item';
-      item.innerHTML = `
-        <img src="${img.src}" alt="${img.name}" />
-        <button class="remove-btn" onclick="removeGalleryImage(${index})">✕</button>
-      `;
-      grid.appendChild(item);
-    });
-  }
-  
-  function removeGalleryImage(index) {
-    galleryImages.splice(index, 1);
-    renderGallery();
-  }
-  
-  // Drag and drop support
-  const uploadBox = document.querySelector('.upload-box');
-  if (uploadBox) {
-    uploadBox.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      uploadBox.style.borderColor = 'var(--accent)';
-      uploadBox.style.background = 'rgba(232,255,71,.08)';
-    });
-    
-    uploadBox.addEventListener('dragleave', () => {
-      uploadBox.style.borderColor = 'var(--border)';
-      uploadBox.style.background = '';
-    });
-    
-    uploadBox.addEventListener('drop', (e) => {
-      e.preventDefault();
-      uploadBox.style.borderColor = 'var(--border)';
-      uploadBox.style.background = '';
-      
-      const input = document.getElementById('galleryUpload');
-      input.files = e.dataTransfer.files;
-      handleGalleryUpload({ target: input });
-    });
-  }
+    tabs.forEach(btn=> btn.addEventListener('click', ()=>{ activateTab(btn); document.getElementById('notes').scrollIntoView({behavior:'smooth'}); }));
+
+    const noteToggle = document.getElementById('note-toggle');
+    if(noteToggle && tabs.length){
+      noteToggle.addEventListener('click', ()=>{
+        // If Notes button clicked, trigger the active tab's Next PDF action
+        const active = tabs.find(t=>t.classList.contains('active'));
+        const activeTab = active ? active.dataset.tab : 'micro';
+        if(activeTab === 'micro') {
+          const btn = document.getElementById('micro-next'); if(btn) btn.click();
+        } else if(activeTab === 'web') {
+          const btn = document.getElementById('web-next'); if(btn) btn.click();
+        }
+        document.getElementById('notes').scrollIntoView({behavior:'smooth'});
+      });
+    }
+
+    // Populate PDF lists for each notes folder and provide Next buttons
+    const microFiles = [
+      'microprocessor/Chapter-1-Introduction.pdf',
+      'microprocessor/Chapter-2-Programming-with-8085.pdf',
+      'microprocessor/Chapter-3-Programming-with-8086.pdf',
+      'microprocessor/Chapter-4-Microprocessor-System.pdf',
+      'microprocessor/Chapter-5-Inturrept-operation.pdf',
+      'microprocessor/Chapter-5-Inturrept-operation (1).pdf',
+      'microprocessor/Chapter-6-Advanced-Topics.pdf'
+    ];
+
+    const webFiles = [
+      'web technology/Chapter 1 Web Technology.pdf',
+      'web technology/Chapter 2 JavaScript Programming.pdf',
+      'web technology/Chapter 3 Server-Side Web Programming.pdf',
+      'web technology/Chapter 4 Web Services and APIs.pdf',
+      'web technology/Chapter 6 Web Application Deployment.pdf',
+      'web technology/All in One.pdf',
+      'web technology/Some_New_Doc.pdf'
+    ];
+
+    const algFiles = [
+      'algebra and geometry/complete-solution-manual-to-algebra-geometry-for-engineering-cs-4202.pdf'
+    ];
+
+    let microIndex = 0;
+    let webIndex = 0;
+    let algIndex = 0;
+
+    function updatePdfDisplay(prefix, files, idx){
+      const linkEl = document.getElementById(prefix + '-current');
+      if(!linkEl) return;
+      const filename = files[idx];
+      const label = filename.split('/').pop();
+      linkEl.href = encodeURI(filename);
+      linkEl.target = '_blank';
+      linkEl.rel = 'noopener';
+      linkEl.style.display = 'inline-flex';
+      linkEl.style.alignItems = 'center';
+      linkEl.style.gap = '0.6rem';
+      linkEl.innerHTML = '<span style="font-size:1.1rem">📄</span><span style="color:var(--accent2);font-weight:700">' + label + '</span>';
+    }
+
+    const microNext = document.getElementById('micro-next');
+    if(microNext){
+      microNext.addEventListener('click', ()=>{
+        updatePdfDisplay('micro', microFiles, microIndex);
+        microIndex = (microIndex + 1) % microFiles.length;
+      });
+    }
+
+    const webNext = document.getElementById('web-next');
+    if(webNext){
+      webNext.addEventListener('click', ()=>{
+        updatePdfDisplay('web', webFiles, webIndex);
+        webIndex = (webIndex + 1) % webFiles.length;
+      });
+    }
+  })();
 </script>
 </body>
 </html>
