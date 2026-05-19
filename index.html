@@ -732,10 +732,14 @@
     <h2 class="section-title">My <em>Notes</em></h2>
     <div class="notes-controls reveal">
       <div class="notes-tabs">
-        <button class="notes-tab active" data-tab="micro">Microprocessor</button>
-        <button class="notes-tab" data-tab="web">Web Technology</button>
-        <button class="notes-tab" data-tab="alg">Algebra & Geometry</button>
-      </div>
+          <button class="notes-tab active" data-tab="micro">Microprocessor</button>
+          <button class="notes-tab" data-tab="web">Web Technology</button>
+          <button class="notes-tab" data-tab="weblab">Web Lab</button>
+          <button class="notes-tab" data-tab="alg">Algebra & Geometry</button>
+          <button class="notes-tab" data-tab="applied">Applied Physics</button>
+          <button class="notes-tab" data-tab="digital">Digital Logics</button>
+          <button class="notes-tab" data-tab="cprog">Programming in C</button>
+        </div>
     </div>
     <div class="notes-panels reveal">
       <div class="notes-panel" id="micro" style="display:block;">
@@ -764,6 +768,19 @@
           <button id="web-next" class="btn-secondary">Next PDF</button>
         </div>
       </div>
+      <div class="notes-panel" id="weblab">
+        <div class="notes-folder">
+          <span>📁</span>
+          <div class="name">weblab</div>
+        </div>
+        <div class="pdf-list" id="weblab-list">
+          <!-- PDF links for Web Lab will be populated here -->
+        </div>
+        <div class="pdf-control" style="margin-top:1rem; display:flex; gap:0.8rem; align-items:center;">
+          <a id="weblab-current" style="display:none"></a>
+          <button id="weblab-next" class="btn-secondary">Next PDF</button>
+        </div>
+      </div>
       <div class="notes-panel" id="alg">
         <div class="notes-folder">
           <span>📁</span>
@@ -775,6 +792,45 @@
         <div class="pdf-control" style="margin-top:1rem; display:flex; gap:0.8rem; align-items:center;">
           <a id="alg-current" style="display:none"></a>
           <button id="alg-next" class="btn-secondary">Next PDF</button>
+        </div>
+      </div>
+      <div class="notes-panel" id="applied">
+        <div class="notes-folder">
+          <span>📁</span>
+          <div class="name">Applied Physics</div>
+        </div>
+        <div class="pdf-list" id="applied-list">
+          <!-- PDF links for Applied Physics will be populated here -->
+        </div>
+        <div class="pdf-control" style="margin-top:1rem; display:flex; gap:0.8rem; align-items:center;">
+          <a id="applied-current" style="display:none"></a>
+          <button id="applied-next" class="btn-secondary">Next PDF</button>
+        </div>
+      </div>
+      <div class="notes-panel" id="digital">
+        <div class="notes-folder">
+          <span>📁</span>
+          <div class="name">Digital Logics</div>
+        </div>
+        <div class="pdf-list" id="digital-list">
+          <!-- PDF links for Digital Logics will be populated here -->
+        </div>
+        <div class="pdf-control" style="margin-top:1rem; display:flex; gap:0.8rem; align-items:center;">
+          <a id="digital-current" style="display:none"></a>
+          <button id="digital-next" class="btn-secondary">Next PDF</button>
+        </div>
+      </div>
+      <div class="notes-panel" id="cprog">
+        <div class="notes-folder">
+          <span>📁</span>
+          <div class="name">Programming in C</div>
+        </div>
+        <div class="pdf-list" id="cprog-list">
+          <!-- PDF links for Programming in C will be populated here -->
+        </div>
+        <div class="pdf-control" style="margin-top:1rem; display:flex; gap:0.8rem; align-items:center;">
+          <a id="cprog-current" style="display:none"></a>
+          <button id="cprog-next" class="btn-secondary">Next PDF</button>
         </div>
       </div>
     </div>
@@ -924,8 +980,8 @@
       <div class="testimonial-author">
         <div class="author-avatar" style="background: rgba(71,255,218,.1)">👨‍💻</div>
         <div>
-          <div class="author-name">Rohan Adhikari</div>
-          <div class="author-role">Classmate · NCIT</div>
+          <div class="author-name">Aaryadhya Pandit</div>
+          <div class="author-role">Classmate · CCRC</div>
         </div>
       </div>
     </div>
@@ -1216,6 +1272,16 @@
           const btn = document.getElementById('micro-next'); if(btn) btn.click();
         } else if(activeTab === 'web') {
           const btn = document.getElementById('web-next'); if(btn) btn.click();
+        } else if(activeTab === 'weblab') {
+          const btn = document.getElementById('weblab-next'); if(btn) btn.click();
+        } else if(activeTab === 'alg') {
+          const btn = document.getElementById('alg-next'); if(btn) btn.click();
+        } else if(activeTab === 'applied') {
+          const btn = document.getElementById('applied-next'); if(btn) btn.click();
+        } else if(activeTab === 'digital') {
+          const btn = document.getElementById('digital-next'); if(btn) btn.click();
+        } else if(activeTab === 'cprog') {
+          const btn = document.getElementById('cprog-next'); if(btn) btn.click();
         }
         document.getElementById('notes').scrollIntoView({behavior:'smooth'});
       });
@@ -1242,13 +1308,54 @@
       'web technology/Some_New_Doc.pdf'
     ];
 
+    const weblabFiles = [
+      'weblab/01.pdf',
+      'weblab/02.pdf'
+    ];
+
+    // Populate the visible PDF list for Web Lab
+    (function populateWeblabList(){
+      const listEl = document.getElementById('weblab-list');
+      if(!listEl) return;
+      listEl.innerHTML = '';
+      weblabFiles.forEach(f => {
+        const a = document.createElement('a');
+        const label = f.split('/').pop();
+        a.href = encodeURI(f);
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.style.display = 'inline-flex';
+        a.style.alignItems = 'center';
+        a.style.gap = '0.6rem';
+        a.style.marginRight = '0.8rem';
+        a.innerHTML = '<span style="font-size:1rem">📄</span><span style="color:var(--accent2);font-weight:600">' + label + '</span>';
+        listEl.appendChild(a);
+      });
+    })();
+
     const algFiles = [
       'algebra and geometry/complete-solution-manual-to-algebra-geometry-for-engineering-cs-4202.pdf'
     ];
 
     let microIndex = 0;
     let webIndex = 0;
+    let weblabIndex = 0;
     let algIndex = 0;
+    let appliedIndex = 0;
+    let digitalIndex = 0;
+    let cprogIndex = 0;
+
+    const appliedFiles = [
+      'Applied Physics/Applied Physics.pdf'
+    ];
+
+    const digitalFiles = [
+      'Digital Logics/Digital Logics.pdf'
+    ];
+
+    const cprogFiles = [
+      'Programming in C/Programming in C.pdf'
+    ];
 
     function updatePdfDisplay(prefix, files, idx){
       const linkEl = document.getElementById(prefix + '-current');
@@ -1277,6 +1384,44 @@
       webNext.addEventListener('click', ()=>{
         updatePdfDisplay('web', webFiles, webIndex);
         webIndex = (webIndex + 1) % webFiles.length;
+      });
+    }
+    const weblabNext = document.getElementById('weblab-next');
+    if(weblabNext){
+      weblabNext.addEventListener('click', ()=>{
+        updatePdfDisplay('weblab', weblabFiles, weblabIndex);
+        weblabIndex = (weblabIndex + 1) % weblabFiles.length;
+      });
+    }
+    const algNext = document.getElementById('alg-next');
+    if(algNext){
+      algNext.addEventListener('click', ()=>{
+        updatePdfDisplay('alg', algFiles, algIndex);
+        algIndex = (algIndex + 1) % algFiles.length;
+      });
+    }
+
+    const appliedNext = document.getElementById('applied-next');
+    if(appliedNext){
+      appliedNext.addEventListener('click', ()=>{
+        updatePdfDisplay('applied', appliedFiles, appliedIndex);
+        appliedIndex = (appliedIndex + 1) % appliedFiles.length;
+      });
+    }
+
+    const digitalNext = document.getElementById('digital-next');
+    if(digitalNext){
+      digitalNext.addEventListener('click', ()=>{
+        updatePdfDisplay('digital', digitalFiles, digitalIndex);
+        digitalIndex = (digitalIndex + 1) % digitalFiles.length;
+      });
+    }
+
+    const cprogNext = document.getElementById('cprog-next');
+    if(cprogNext){
+      cprogNext.addEventListener('click', ()=>{
+        updatePdfDisplay('cprog', cprogFiles, cprogIndex);
+        cprogIndex = (cprogIndex + 1) % cprogFiles.length;
       });
     }
   })();
